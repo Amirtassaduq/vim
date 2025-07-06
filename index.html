@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: "Fira Code", "Courier New", monospace;
+        padding: 5px;
+        font-size: 10px;
+        margin: 5px;
+      }
+      h1 {
+        color: #4ec9b0;
+        text-align: center;
+        font-size: 2.4em;
+        margin: 10px 0 20px;
+        text-shadow: 0 0 8px rgba(78, 201, 176, 0.3);
+      }
+      .section {
+        background-color: #1e1e1e;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        break-inside: avoid; /* Prevents splitting across columns */
+        margin-bottom: 15px;
+      }
+      h2 {
+        color: #569cd6;
+        border-bottom: 1px solid #333;
+        padding-bottom: 4px;
+        margin-top: 5px;
+        margin-bottom: 12px;
+        font-size: 1.2em;
+      }
+      kbd {
+        background-color: #333;
+        color: #dcdcaa;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: inherit;
+        display: inline-block;
+        min-width: 20px;
+        text-align: center;
+      }
+      .command {
+        margin-bottom: 6px;
+        display: flex;
+      }
+      .keys {
+        min-width: 120px;
+      }
+      .desc {
+        flex-grow: 1;
+      }
+      .well {
+        background-color: #252525;
+        border-left: 3px solid #569cd6;
+        padding: 8px 12px;
+        margin: 10px 0;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.9em;
+      }
+      .well strong {
+        color: #9cdcfe;
+      }
+
+      /* COLUMN-BASED LAYOUT (NO GRID) */
+      .commands-container {
+        column-count: 5;
+        column-gap: 15px;
+        max-width: 2500px;
+        margin: 0 auto;
+      }
+
+      /* RESPONSIVE ADJUSTMENTS */
+      @media (max-width: 2000px) {
+        .container {
+          column-count: 4;
+        }
+      }
+      @media (max-width: 1600px) {
+        .container {
+          column-count: 3;
+        }
+      }
+      @media (max-width: 800px) {
+        .container {
+          column-count: 1;
+        }
+      }
+
+      /* MOBILE (360x640) FIXES */
+      @media (max-width: 640px) {
+        body {
+          font-size: 12px;
+        } /* Increase base size */
+        .section {
+          padding: 10px;
+        }
+        .keys {
+          min-width: 110px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        h1 {
+          font-size: 1.8em;
+        }
+        .command {
+          flex-direction: column;
+        }
+        .keys {
+          min-width: 100%;
+          margin-bottom: 3px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>VIM CHEAT SHEET</h1>
+
+      <!-- GLOBAL SECTION -->
+      <div class="section">
+        <h2>GLOBAL</h2>
+        <div class="command">
+          <div class="keys"><kbd>:h</kbd> <kbd>keyword</kbd></div>
+          <div class="desc">open help for keyword</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>:sav</kbd> <kbd>file</kbd></div>
+          <div class="desc">save file as</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>:clo</kbd></div>
+          <div class="desc">close current pane</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>:ter</kbd></div>
+          <div class="desc">open terminal window</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>K</kbd></div>
+          <div class="desc">open man page for word under cursor</div>
+        </div>
+
+        <div class="well"><strong>Tip</strong> Run <kbd>vimtutor</kbd> in terminal to learn first Vim commands.</div>
+      </div>
+
+      <!-- CURSOR MOVEMENT SECTION -->
+      <div class="section">
+        <h2>CURSOR MOVEMENT</h2>
+        <div class="command">
+          <div class="keys"><kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></div>
+          <div class="desc">basic movement (left, down, up, right)</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>gj</kbd> <kbd>gk</kbd></div>
+          <div class="desc">move through wrapped lines</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>H</kbd> <kbd>M</kbd> <kbd>L</kbd></div>
+          <div class="desc">top/middle/bottom of screen</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>w</kbd> <kbd>W</kbd></div>
+          <div class="desc">start of next word (with/without punctuation)</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>e</kbd> <kbd>E</kbd></div>
+          <div class="desc">end of word (with/without punctuation)</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>b</kbd> <kbd>B</kbd></div>
+          <div class="desc">back to word start (with/without punctuation)</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>ge</kbd> <kbd>gE</kbd></div>
+          <div class="desc">end of previous word</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>%</kbd></div>
+          <div class="desc">jump to matching pair () {} []</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>0</kbd> <kbd>^</kbd> <kbd>$</kbd> <kbd>g_</kbd></div>
+          <div class="desc">line start/first non-blank/end/last non-blank</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>gg</kbd> <kbd>G</kbd></div>
+          <div class="desc">first/last line of document</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>5gg</kbd> <kbd>5G</kbd></div>
+          <div class="desc">go to line 5</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>gd</kbd> <kbd>gD</kbd></div>
+          <div class="desc">local/global declaration</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>fx</kbd> <kbd>Fx</kbd></div>
+          <div class="desc">jump to next/previous occurrence of x</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>;</kbd> <kbd>,</kbd></div>
+          <div class="desc">repeat last f/F/t/T movement forward/backward</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>}</kbd> <kbd>{</kbd></div>
+          <div class="desc">next/previous paragraph or code block</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>zz</kbd> <kbd>zt</kbd> <kbd>zb</kbd></div>
+          <div class="desc">center/top/bottom cursor on screen</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>e</kbd> <kbd>Ctrl</kbd>+<kbd>y</kbd></div>
+          <div class="desc">scroll down/up without moving cursor</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>Ctrl</kbd>+<kbd>f</kbd></div>
+          <div class="desc">page up/down</div>
+        </div>
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>d</kbd> <kbd>Ctrl</kbd>+<kbd>u</kbd></div>
+          <div class="desc">half page down/up</div>
+        </div>
+      </div>
+
+      <!-- INSERT MODE SECTION (16 commands) -->
+      <div class="section">
+        <h2>INSERT MODE</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>i</kbd> <kbd>I</kbd></div>
+          <div class="desc">insert at cursor/start of line</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>a</kbd> <kbd>A</kbd></div>
+          <div class="desc">append after cursor/end of line</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>o</kbd> <kbd>O</kbd></div>
+          <div class="desc">new line below/above</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>ea</kbd></div>
+          <div class="desc">append at end of word</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>h</kbd></div>
+          <div class="desc">delete previous character</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>w</kbd></div>
+          <div class="desc">delete previous word</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>j</kbd></div>
+          <div class="desc">insert line break</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>t</kbd></div>
+          <div class="desc">indent right</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>d</kbd></div>
+          <div class="desc">indent left</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>n</kbd></div>
+          <div class="desc">next autocomplete</div>
+        </div>
+        <!-- 11 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>p</kbd></div>
+          <div class="desc">previous autocomplete</div>
+        </div>
+        <!-- 12 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>r</kbd> <kbd>x</kbd></div>
+          <div class="desc">insert from register x</div>
+        </div>
+        <!-- 13 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>o</kbd> <kbd>x</kbd></div>
+          <div class="desc">temporary normal mode command x</div>
+        </div>
+        <!-- 14 -->
+        <div class="command">
+          <div class="keys"><kbd>Esc</kbd></div>
+          <div class="desc">exit insert mode</div>
+        </div>
+        <!-- 15 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>c</kbd></div>
+          <div class="desc">exit insert mode</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <!-- EDITING SECTION (22 commands) -->
+        <h2>EDITING</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>r</kbd></div>
+          <div class="desc">replace single character</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>R</kbd></div>
+          <div class="desc">replace multiple characters until ESC</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>J</kbd></div>
+          <div class="desc">join line below with space</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>gJ</kbd></div>
+          <div class="desc">join line below without space</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>gwip</kbd></div>
+          <div class="desc">reflow paragraph</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>g~</kbd></div>
+          <div class="desc">switch case up to motion</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>gu</kbd></div>
+          <div class="desc">change to lowercase up to motion</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>gU</kbd></div>
+          <div class="desc">change to uppercase up to motion</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>cc</kbd></div>
+          <div class="desc">change (replace) entire line</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>c$</kbd> <kbd>C</kbd></div>
+          <div class="desc">change to end of line</div>
+        </div>
+        <!-- 11 -->
+        <div class="command">
+          <div class="keys"><kbd>ciw</kbd></div>
+          <div class="desc">change entire word</div>
+        </div>
+        <!-- 12 -->
+        <div class="command">
+          <div class="keys"><kbd>cw</kbd> <kbd>ce</kbd></div>
+          <div class="desc">change to end of word</div>
+        </div>
+        <!-- 13 -->
+        <div class="command">
+          <div class="keys"><kbd>s</kbd></div>
+          <div class="desc">delete char and substitute (same as cl)</div>
+        </div>
+        <!-- 14 -->
+        <div class="command">
+          <div class="keys"><kbd>S</kbd></div>
+          <div class="desc">delete line and substitute (same as cc)</div>
+        </div>
+        <!-- 15 -->
+        <div class="command">
+          <div class="keys"><kbd>xp</kbd></div>
+          <div class="desc">transpose two letters</div>
+        </div>
+        <!-- 16 -->
+        <div class="command">
+          <div class="keys"><kbd>u</kbd></div>
+          <div class="desc">undo</div>
+        </div>
+        <!-- 17 -->
+        <div class="command">
+          <div class="keys"><kbd>U</kbd></div>
+          <div class="desc">restore (undo) last changed line</div>
+        </div>
+        <!-- 18 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>r</kbd></div>
+          <div class="desc">redo</div>
+        </div>
+        <!-- 19 -->
+        <div class="command">
+          <div class="keys"><kbd>.</kbd></div>
+          <div class="desc">repeat last command</div>
+        </div>
+        <!-- 20 -->
+        <div class="command">
+          <div class="keys"><kbd>~</kbd></div>
+          <div class="desc">switch case of character</div>
+        </div>
+        <!-- 21 -->
+        <div class="command">
+          <div class="keys"><kbd>g~~</kbd></div>
+          <div class="desc">switch case of line</div>
+        </div>
+        <!-- 22 -->
+        <div class="command">
+          <div class="keys"><kbd>gUU</kbd> <kbd>guu</kbd></div>
+          <div class="desc">uppercase/lowercase line</div>
+        </div>
+      </div>
+
+      <!-- MARKS SECTION (10 commands) -->
+      <div class="section">
+        <h2>MARKS</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>:marks</kbd></div>
+          <div class="desc">list of marks</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>ma</kbd></div>
+          <div class="desc">set current position for mark A</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>`a</kbd></div>
+          <div class="desc">jump to position of mark A</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>y`a</kbd></div>
+          <div class="desc">yank text to position of mark A</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>`0</kbd></div>
+          <div class="desc">go to last exit position</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>`"</kbd></div>
+          <div class="desc">go to last edit position</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>`.</kbd></div>
+          <div class="desc">go to last change position</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>``</kbd></div>
+          <div class="desc">go to position before last jump</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>:ju</kbd></div>
+          <div class="desc">list of jumps</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>:changes</kbd></div>
+          <div class="desc">list of changes</div>
+        </div>
+
+        <div class="well"><strong>Tip</strong> Use backtick (<kbd>`</kbd>) to jump to exact mark position or apostrophe (<kbd>'</kbd>) to jump to line start.</div>
+      </div>
+
+      <!-- VISUAL MODE SECTION (13 commands) -->
+      <div class="section">
+        <h2>VISUAL MODE</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>v</kbd></div>
+          <div class="desc">start visual mode, mark lines</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>V</kbd></div>
+          <div class="desc">start linewise visual mode</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl</kbd>+<kbd>v</kbd></div>
+          <div class="desc">start visual block mode</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>o</kbd></div>
+          <div class="desc">move to other end of marked area</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>O</kbd></div>
+          <div class="desc">move to other corner of block</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>aw</kbd></div>
+          <div class="desc">mark a word</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>ab</kbd></div>
+          <div class="desc">a block with ()</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>aB</kbd></div>
+          <div class="desc">a block with {}</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>at</kbd></div>
+          <div class="desc">a block with &lt;&gt; tags</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>ib</kbd></div>
+          <div class="desc">inner block with ()</div>
+        </div>
+        <!-- 11 -->
+        <div class="command">
+          <div class="keys"><kbd>iB</kbd></div>
+          <div class="desc">inner block with {}</div>
+        </div>
+        <!-- 12 -->
+        <div class="command">
+          <div class="keys"><kbd>it</kbd></div>
+          <div class="desc">inner block with &lt;&gt; tags</div>
+        </div>
+        <!-- 13 -->
+        <div class="command">
+          <div class="keys"><kbd>Esc</kbd> <kbd>Ctrl</kbd>+<kbd>c</kbd></div>
+          <div class="desc">exit visual mode</div>
+        </div>
+
+        <div class="well"><strong>Tip</strong> Instead of <kbd>b</kbd> or <kbd>B</kbd> one can also use <kbd>(</kbd> or <kbd>{</kbd> respectively.</div>
+      </div>
+
+      <!-- VISUAL COMMANDS SECTION (7 commands) -->
+      <div class="section">
+        <h2>VISUAL COMMANDS</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>&gt;</kbd></div>
+          <div class="desc">shift text right</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>&lt;</kbd></div>
+          <div class="desc">shift text left</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>y</kbd></div>
+          <div class="desc">yank (copy) marked text</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>d</kbd></div>
+          <div class="desc">delete marked text</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>~</kbd></div>
+          <div class="desc">switch case</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>u</kbd></div>
+          <div class="desc">change marked text to lowercase</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>U</kbd></div>
+          <div class="desc">change marked text to uppercase</div>
+        </div>
+      </div>
+
+      <!-- REGISTERS SECTION (12 commands) -->
+      <div class="section">
+        <h2>REGISTERS</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>:reg</kbd></div>
+          <div class="desc">show registers content</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>"xy</kbd></div>
+          <div class="desc">yank into register x</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>"xp</kbd></div>
+          <div class="desc">paste contents of register x</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>"+y</kbd></div>
+          <div class="desc">yank into system clipboard</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>"+p</kbd></div>
+          <div class="desc">paste from system clipboard</div>
+        </div>
+        <!-- 6 -->
+        <div class="well">
+          <strong>Special registers:</strong>
+          <div><kbd>0</kbd> - last yank</div>
+          <div><kbd>"</kbd> - unnamed register</div>
+          <div><kbd>%</kbd> - current file name</div>
+          <div><kbd>#</kbd> - alternate file name</div>
+          <div><kbd>*</kbd> - clipboard contents (X11 primary)</div>
+          <div><kbd>+</kbd> - clipboard contents (X11 clipboard)</div>
+          <div><kbd>/</kbd> - last search pattern</div>
+          <div><kbd>:</kbd> - last command-line</div>
+          <div><kbd>.</kbd> - last inserted text</div>
+          <div><kbd>-</kbd> - last small delete</div>
+          <div><kbd>=</kbd> - expression register</div>
+          <div><kbd>_</kbd> - black hole register</div>
+        </div>
+      </div>
+
+      <!-- MACROS SECTION (4 commands) -->
+      <div class="section">
+        <h2>MACROS</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>qa</kbd></div>
+          <div class="desc">record macro a</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>q</kbd></div>
+          <div class="desc">stop recording macro</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>@a</kbd></div>
+          <div class="desc">run macro a</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>@@</kbd></div>
+          <div class="desc">rerun last run macro</div>
+        </div>
+      </div>
+
+      <!-- CUT/PASTE SECTION (18 commands) -->
+      <div class="section">
+        <h2>CUT/PASTE</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>yy</kbd></div>
+          <div class="desc">yank (copy) a line</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>2yy</kbd></div>
+          <div class="desc">yank 2 lines</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>yw</kbd></div>
+          <div class="desc">yank from cursor to next word start</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>yiw</kbd></div>
+          <div class="desc">yank word under cursor</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>yaw</kbd></div>
+          <div class="desc">yank word under cursor and space</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>y$</kbd> <kbd>Y</kbd></div>
+          <div class="desc">yank to end of line</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>p</kbd></div>
+          <div class="desc">paste after cursor</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>P</kbd></div>
+          <div class="desc">paste before cursor</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>gp</kbd></div>
+          <div class="desc">paste after and leave cursor after</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>gP</kbd></div>
+          <div class="desc">paste before and leave cursor after</div>
+        </div>
+        <!-- 11 -->
+        <div class="command">
+          <div class="keys"><kbd>dd</kbd></div>
+          <div class="desc">delete (cut) a line</div>
+        </div>
+        <!-- 12 -->
+        <div class="command">
+          <div class="keys"><kbd>2dd</kbd></div>
+          <div class="desc">delete 2 lines</div>
+        </div>
+        <!-- 13 -->
+        <div class="command">
+          <div class="keys"><kbd>dw</kbd></div>
+          <div class="desc">delete from cursor to next word start</div>
+        </div>
+        <!-- 14 -->
+        <div class="command">
+          <div class="keys"><kbd>diw</kbd></div>
+          <div class="desc">delete word under cursor</div>
+        </div>
+        <!-- 15 -->
+        <div class="command">
+          <div class="keys"><kbd>daw</kbd></div>
+          <div class="desc">delete word under cursor and space</div>
+        </div>
+        <!-- 16 -->
+        <div class="command">
+          <div class="keys"><kbd>:3,5d</kbd></div>
+          <div class="desc">delete lines 3 to 5</div>
+        </div>
+        <!-- 17 -->
+        <div class="command">
+          <div class="keys"><kbd>d$</kbd> <kbd>D</kbd></div>
+          <div class="desc">delete to end of line</div>
+        </div>
+        <!-- 18 -->
+        <div class="command">
+          <div class="keys"><kbd>x</kbd></div>
+          <div class="desc">delete character</div>
+        </div>
+
+        <div class="well">
+          <strong>Range Examples:</strong>
+          <div><kbd>:.,$d</kbd> - Current line to EOF</div>
+          <div><kbd>:.,1d</kbd> - Current line to file start</div>
+          <div><kbd>:10,1d</kbd> - Line 10 to file start</div>
+        </div>
+      </div>
+
+      <!-- EXITING SECTION (7 commands) -->
+      <div class="section">
+        <h2>EXITING</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>:w</kbd></div>
+          <div class="desc">write (save) file, don't exit</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>:w !sudo tee %</kbd></div>
+          <div class="desc">write file using sudo</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>:wq</kbd> <kbd>:x</kbd> <kbd>ZZ</kbd></div>
+          <div class="desc">write (save) and quit</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>:q</kbd></div>
+          <div class="desc">quit (fails if unsaved changes)</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>:q!</kbd> <kbd>ZQ</kbd></div>
+          <div class="desc">quit and discard changes</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>:wqa</kbd></div>
+          <div class="desc">write and quit all tabs</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>:qa!</kbd></div>
+          <div class="desc">quit all tabs and discard changes</div>
+        </div>
+      </div>
+
+      <!-- SEARCH/REPLACE SECTION (8 commands) -->
+      <div class="section">
+        <h2>SEARCH/REPLACE</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>/pattern</kbd></div>
+          <div class="desc">search forward for pattern</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>?pattern</kbd></div>
+          <div class="desc">search backward for pattern</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>\vpattern</kbd></div>
+          <div class="desc">'very magic' regex pattern (no escaping needed)</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>n</kbd></div>
+          <div class="desc">repeat search in same direction</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>N</kbd></div>
+          <div class="desc">repeat search in opposite direction</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>:%s/old/new/g</kbd></div>
+          <div class="desc">replace all old with new throughout file</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>:%s/old/new/gc</kbd></div>
+          <div class="desc">replace all with confirmations</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>:noh</kbd></div>
+          <div class="desc">remove search highlighting</div>
+        </div>
+      </div>
+
+      <!-- MULTI-FILE SEARCH SECTION (6 commands) -->
+      <div class="section">
+        <h2>SEARCH IN MULTIPLE FILES</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>:vim /pattern/ {file}</kbd></div>
+          <div class="desc">search for pattern in multiple files</div>
+        </div>
+        <!-- 2 -->
+        <div class="well"><strong>Example:</strong> <kbd>:vim /foo/ **/*</kbd></div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>:cn</kbd></div>
+          <div class="desc">jump to next match</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>:cp</kbd></div>
+          <div class="desc">jump to previous match</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>:copen</kbd></div>
+          <div class="desc">open quickfix window with matches</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>:cclose</kbd></div>
+          <div class="desc">close quickfix window</div>
+        </div>
+      </div>
+
+      <!-- TABS SECTION (9 commands) -->
+      <div class="section">
+        <h2>TABS</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>:tabnew</kbd></div>
+          <div class="desc">open new tab</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>:tabnew {file}</kbd></div>
+          <div class="desc">open file in new tab</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wT</kbd></div>
+          <div class="desc">move current window to new tab</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>gt</kbd> <kbd>:tabn</kbd></div>
+          <div class="desc">next tab</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>gT</kbd> <kbd>:tabp</kbd></div>
+          <div class="desc">previous tab</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>3gt</kbd></div>
+          <div class="desc">go to tab 3</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>:tabm 2</kbd></div>
+          <div class="desc">move tab to position 2</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>:tabc</kbd></div>
+          <div class="desc">close current tab</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>:tabo</kbd></div>
+          <div class="desc">close all other tabs</div>
+        </div>
+      </div>
+
+      <!-- MULTIPLE FILES SECTION (20 commands) -->
+      <div class="section">
+        <h2>WORKING WITH MULTIPLE FILES</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>:e file</kbd></div>
+          <div class="desc">edit file in new buffer</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>:bn</kbd></div>
+          <div class="desc">next buffer</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>:bp</kbd></div>
+          <div class="desc">previous buffer</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>:bd</kbd></div>
+          <div class="desc">delete buffer (close file)</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>:b #</kbd></div>
+          <div class="desc">go to buffer by index #</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>:b file</kbd></div>
+          <div class="desc">go to buffer by filename</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>:ls</kbd> <kbd>:buffers</kbd></div>
+          <div class="desc">list all open buffers</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>:sp file</kbd></div>
+          <div class="desc">open file in new buffer (horizontal split)</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>:vs file</kbd></div>
+          <div class="desc">open file in new buffer (vertical split)</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>:vert ba</kbd></div>
+          <div class="desc">edit all buffers as vertical windows</div>
+        </div>
+        <!-- 11 -->
+        <div class="command">
+          <div class="keys"><kbd>:tab ba</kbd></div>
+          <div class="desc">edit all buffers as tabs</div>
+        </div>
+        <!-- 12 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+ws</kbd></div>
+          <div class="desc">split window</div>
+        </div>
+        <!-- 13 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wv</kbd></div>
+          <div class="desc">split window vertically</div>
+        </div>
+        <!-- 14 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+ww</kbd></div>
+          <div class="desc">switch windows</div>
+        </div>
+        <!-- 15 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wq</kbd></div>
+          <div class="desc">quit window</div>
+        </div>
+        <!-- 16 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wx</kbd></div>
+          <div class="desc">exchange current window with next</div>
+        </div>
+        <!-- 17 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+w=</kbd></div>
+          <div class="desc">equalize window sizes</div>
+        </div>
+        <!-- 18 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wh</kbd> <kbd>Ctrl+wl</kbd></div>
+          <div class="desc">move to left/right window (vertical split)</div>
+        </div>
+        <!-- 19 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wj</kbd> <kbd>Ctrl+wk</kbd></div>
+          <div class="desc">move to window below/above (horizontal split)</div>
+        </div>
+        <!-- 20 -->
+        <div class="command">
+          <div class="keys"><kbd>Ctrl+wH</kbd> <kbd>Ctrl+wL</kbd> <kbd>Ctrl+wJ</kbd> <kbd>Ctrl+wK</kbd></div>
+          <div class="desc">move windows to far left/right/bottom/top</div>
+        </div>
+      </div>
+
+      <!-- INDENT TEXT SECTION (9 commands) -->
+      <div class="section">
+        <h2>INDENT TEXT</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>&gt;&gt;</kbd></div>
+          <div class="desc">indent line right one shiftwidth</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>&lt;&lt;</kbd></div>
+          <div class="desc">de-indent line left one shiftwidth</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>&gt;%</kbd></div>
+          <div class="desc">indent block with () or {} (cursor on brace)</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>&lt;%</kbd></div>
+          <div class="desc">de-indent block with () or {} (cursor on brace)</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>&gt;ib</kbd></div>
+          <div class="desc">indent inner block with ()</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>&gt;at</kbd></div>
+          <div class="desc">indent block with &lt;&gt; tags</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>3==</kbd></div>
+          <div class="desc">re-indent 3 lines</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>=%</kbd></div>
+          <div class="desc">re-indent block with () or {} (cursor on brace)</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>gg=G</kbd></div>
+          <div class="desc">re-indent entire buffer</div>
+        </div>
+      </div>
+
+      <!-- DIFF SECTION (12 commands) -->
+      <div class="section">
+        <h2>DIFF</h2>
+        <!-- 1 -->
+        <div class="command">
+          <div class="keys"><kbd>zf</kbd></div>
+          <div class="desc">manually define fold up to motion</div>
+        </div>
+        <!-- 2 -->
+        <div class="command">
+          <div class="keys"><kbd>zd</kbd></div>
+          <div class="desc">delete fold under cursor</div>
+        </div>
+        <!-- 3 -->
+        <div class="command">
+          <div class="keys"><kbd>za</kbd></div>
+          <div class="desc">toggle fold under cursor</div>
+        </div>
+        <!-- 4 -->
+        <div class="command">
+          <div class="keys"><kbd>zo</kbd></div>
+          <div class="desc">open fold under cursor</div>
+        </div>
+        <!-- 5 -->
+        <div class="command">
+          <div class="keys"><kbd>zc</kbd></div>
+          <div class="desc">close fold under cursor</div>
+        </div>
+        <!-- 6 -->
+        <div class="command">
+          <div class="keys"><kbd>zr</kbd></div>
+          <div class="desc">reduce (open) all folds by one level</div>
+        </div>
+        <!-- 7 -->
+        <div class="command">
+          <div class="keys"><kbd>zm</kbd></div>
+          <div class="desc">fold more (close) all folds by one level</div>
+        </div>
+        <!-- 8 -->
+        <div class="command">
+          <div class="keys"><kbd>zi</kbd></div>
+          <div class="desc">toggle folding functionality</div>
+        </div>
+        <!-- 9 -->
+        <div class="command">
+          <div class="keys"><kbd>]c</kbd></div>
+          <div class="desc">jump to start of next change</div>
+        </div>
+        <!-- 10 -->
+        <div class="command">
+          <div class="keys"><kbd>[c</kbd></div>
+          <div class="desc">jump to start of previous change</div>
+        </div>
+        <!-- 11 -->
+        <div class="command">
+          <div class="keys"><kbd>do</kbd> <kbd>:diffg</kbd></div>
+          <div class="desc">obtain difference from other buffer</div>
+        </div>
+        <!-- 12 -->
+        <div class="command">
+          <div class="keys"><kbd>dp</kbd> <kbd>:diffpu</kbd></div>
+          <div class="desc">put difference to other buffer</div>
+        </div>
+
+        <div class="well"><strong>Tip</strong> Start Vim in diff mode with <kbd>vimdiff file1 file2</kbd></div>
+      </div>
+    </div>
+  </body>
+</html>
